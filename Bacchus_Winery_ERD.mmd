@@ -1,0 +1,103 @@
+erDiagram
+
+    %% =======================
+    %% SUPPLIERS
+    %% =======================
+
+    SUPPLIER {
+        int SupplierID PK
+        string SupplierName
+        string SupplierCategory
+    }
+
+    SUPPLY_DELIVERY {
+        int InvoiceID PK
+        int SupplierID FK
+        string SupplyType
+        int QuantityDelivered
+        date ExpectedDelivery
+        date ActualDelivery
+    }
+
+    SUPPLIER ||--o{ SUPPLY_DELIVERY : "Supplies"
+
+
+    %% =======================
+    %% DISTRIBUTORS
+    %% =======================
+
+    DISTRIBUTOR {
+        int DistributorID PK
+        string DistributorName
+        string DistributorPhone
+        string DistributorAddress
+        string DistributorEmail
+    }
+
+    DISTRIBUTOR_ORDER {
+        int OrderID PK
+        int DistributorID FK
+        date OrderDate
+    }
+
+    ORDER_ITEM {
+        int OrderItemID PK
+        int OrderID FK
+        int WineID FK
+        int QuantityOrdered
+    }
+
+    SHIPMENT {
+        int ShipmentID PK
+        int OrderID FK
+        date ShipmentDate
+        string TrackingNumber
+    }
+
+    WINE_DISTRIBUTOR {
+        int WD_ID PK
+        int WineID FK
+        int DistributorID FK
+    }
+
+    DISTRIBUTOR ||--o{ DISTRIBUTOR_ORDER : "Places"
+    DISTRIBUTOR_ORDER ||--o{ ORDER_ITEM : "Contains"
+    ORDER_ITEM ||--o{ SHIPMENT : "Ships"
+    WINE ||--o{ WINE_DISTRIBUTOR : "Linked"
+    DISTRIBUTOR ||--o{ WINE_DISTRIBUTOR : "Linked"
+
+
+    %% =======================
+    %% INTERNAL OPERATIONS
+    %% =======================
+
+    EMPLOYEE {
+        int EmployeeID PK
+        string FirstName
+        string LastName
+        string Role
+        int DepartmentID FK
+    }
+
+    DEPARTMENT {
+        int DepartmentID PK
+        string DepartmentName
+        int ManagerEmployeeID FK
+    }
+
+    HOURS {
+        int HoursID PK
+        int EmployeeID FK
+        date DateWorked
+        float HoursWorked
+    }
+
+    WINE {
+        int WineID PK
+        string WineName
+        string WineType
+        int YearProduced
+    }
+
+    DEPARTMENT ||--o{ EMPLOYEE : "Employs"
+    EMPLOYEE ||--o{ HOURS : "Logs"
