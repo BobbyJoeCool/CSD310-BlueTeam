@@ -1,15 +1,15 @@
 -- SQL script for creating the Bacchus Database
 
 -- Delete a Dummy Database if it exists, then create a dummy database for testing the script.
-DROP DATABASE IF EXISTS DummyDB;
-CREATE DATABASE DummyDB;
-USE DummyDB;
+DROP DATABASE IF EXISTS BacchusWineryDB;
+CREATE DATABASE BacchusWineryDB;
+USE BacchusWineryDB;
 
 
 -- Create a User for the Python Scripts and .env file.
 DROP USER IF EXISTS 'dionysus'@'localhost';
 CREATE USER 'dionysus'@'localhost' IDENTIFIED BY 'MountOlympus';
-GRANT ALL PRIVILEGES ON DummyDB.* TO 'dionysus'@'localhost';
+GRANT ALL PRIVILEGES ON BacchusWineryDB.* TO 'dionysus'@'localhost';
 FLUSH PRIVILEGES;
 
 -- *** Create Tables

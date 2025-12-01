@@ -1,7 +1,4 @@
-USE DummyDB;
-
--- Refreshes the Database
--- SOURCE Bacchus_Database_Creation.Robert.sql;
+USE BacchusWineryDB;
 
 -- =================================
 -- Adds data to the Bacchus Database
