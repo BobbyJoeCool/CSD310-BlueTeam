@@ -70,8 +70,8 @@ def main():
         tables = [t[0] for t in cursor.fetchall()]
         print(f"Found Tables: {tables}\n")
 
-        for table in tables:
-            printTableSchema(cursor, table)
+        # for table in tables:
+        #     printTableSchema(cursor, table)
 
         for table in tables:
             printTableRows(cursor, table)

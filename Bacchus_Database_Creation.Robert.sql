@@ -14,7 +14,7 @@ FLUSH PRIVILEGES;
 
 -- *** Create Tables
 
--- ------------------
+-- ==================
 -- ** Internal Tables
 
 -- Departments Table
@@ -55,7 +55,7 @@ ALTER TABLE Department
 ADD CONSTRAINT fk_manager
     FOREIGN KEY (ManagerEmployeeID) REFERENCES Employee (EmployeeID);
 
--- -----------------
+-- ==================
 -- ** Supplier Tables
 
 -- Supplier Table
@@ -75,24 +75,16 @@ CREATE TABLE SupplierDelivery (
     ActualDelivery DATE
 );
 
--- ---------------------
+-- =====================
 -- ** Distributor Tables
 
 -- Distributor Table
-CREATE TABLE Dist (
+CREATE TABLE Distributor (
     DistID INT PRIMARY KEY AUTO_INCREMENT,
     DistName VARCHAR(75) NOT NULL,
     DistPhone VARCHAR(10),
     DistAddress VARCHAR(75),
     DistEmail VARCHAR(75) 
-);
-
--- Distributor Order Table
-CREATE TABLE DistOrder (
-    OrderID INT PRIMARY KEY AUTO_INCREMENT,
-    DistID INT NOT NULL,
-    OrderDate DATE NOT NULL,
-    FOREIGN KEY (DistID) REFERENCES Dist (DistID)
 );
 
 -- ShippingService Table
@@ -106,12 +98,20 @@ CREATE TABLE ShipService (
 -- Shipment Table
 CREATE TABLE Shipment (
     ShipmentID INT PRIMARY KEY AUTO_INCREMENT,
-    OrderID INT NOT NULL,
     ShipmentDate DATE,
     TrackingNumber VARCHAR(50),
     ShippingService INT,
-    FOREIGN KEY (OrderID) REFERENCES DistOrder (OrderID),
     FOREIGN KEY (ShippingService) REFERENCES ShipService (ShipperID)
+);
+
+-- Distributor Order Table
+CREATE TABLE DistOrder (
+    OrderID INT PRIMARY KEY AUTO_INCREMENT,
+    DistID INT NOT NULL,
+    ShipmentID INT,
+    OrderDate DATE,
+    FOREIGN KEY (ShipmentID) REFERENCES Shipment (ShipmentID),
+    FOREIGN KEY (DistID) REFERENCES Distributor (DistID)
 );
 
 -- Item Order ID Table
@@ -124,7 +124,7 @@ CREATE TABLE ItemOrderID (
     FOREIGN KEY (WineID) REFERENCES Wine (WineID)
 );
 
--- -------------------------------------------------------------------------
+-- =========================================================================
 -- ** Table for the Many to Many Relationship between Wines and Distributors
 
 CREATE TABLE WineToDist (
@@ -132,9 +132,11 @@ CREATE TABLE WineToDist (
     WineID INT NOT NULL,
     DistID INT NOT NULL,
     FOREIGN KEY (WineID) REFERENCES Wine (WineID),
-    FOREIGN KEY (DistID) REFERENCES Dist (DistID)
+    FOREIGN KEY (DistID) REFERENCES Distributor (DistID)
 );
 
+-- ==================
+-- Show Table Schemas
 SHOW Tables;
 DESC Department;
 DESC Employee;

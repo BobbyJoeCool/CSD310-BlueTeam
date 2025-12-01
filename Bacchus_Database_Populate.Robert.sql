@@ -1,0 +1,214 @@
+USE DummyDB;
+
+-- Refreshes the Database
+-- SOURCE Bacchus_Database_Creation.Robert.sql;
+
+-- =================================
+-- Adds data to the Bacchus Database
+
+-- ===============
+-- Internal Tables
+
+-- Departments
+INSERT INTO Department (DeptName)
+VALUES
+    ('Finance & Payroll'),
+    ('Marketing'),
+    ('Production'),
+    ('Distribution'),
+    ('Executive');
+
+-- Twenty employees for the production department created by ChatGPT asked to follow the format ('FirstName', 'LastName', 'Role', 3).  It was asked to use GrecoRoman hero names.
+INSERT INTO Employee (FirstName, LastName, Role, DeptID)
+VALUES
+    ('Stan', 'Bacchus', 'Owner', 5),
+    ('Davis', 'Bacchus', 'Owner', 5),
+    ('Janet', 'Collins', 'Manager', 1),
+    ('Roz', 'Murphy', 'Manager', 2),
+    ('Henry', 'Doyle', 'Manager', 3),
+    ('Maria', 'Costanza', 'Manager', 4),
+    ('Bob', 'Ulrich', 'Assistant', 2),
+    ('Achilles', 'Myrmidon', 'Winemaker', 3),
+    ('Hercules', 'Alcides', 'Vineyard Worker', 3),
+    ('Odysseus', 'Ithaca', 'Fermentation Specialist', 3),
+    ('Aeneas', 'Trojan', 'Barrel Master', 3),
+    ('Perseus', 'Danae', 'Bottling Specialist', 3),
+    ('Theseus', 'Athens', 'Cellar Worker', 3),
+    ('Jason', 'Argonaut', 'Quality Inspector', 3),
+    ('Orpheus', 'Thrace', 'Label Designer', 3),
+    ('Hector', 'Troy', 'Logistics Assistant', 3),
+    ('Romulus', 'Rome', 'Stock Manager', 3),
+    ('Remus', 'Rome', 'Packaging Worker', 3),
+    ('Diomedes', 'Argos', 'Grape Picker', 3),
+    ('Bellerophon', 'Corinth', 'Maintenance', 3),
+    ('Ajax', 'Salamis', 'Wine Taster', 3),
+    ('Castor', 'Sparta', 'Warehouse Worker', 3),
+    ('Pollux', 'Sparta', 'Fermentation Assistant', 3),
+    ('Ariadne', 'Crete', 'Assistant Winemaker', 3),
+    ('Meleager', 'Calydon', 'Vineyard Assistant', 3),
+    ('Atalanta', 'Arcadia', 'Barrel Assistant', 3);
+
+-- Update Departments with Managers
+-- Janet Collins, Finance & Payroll
+UPDATE Department SET ManagerEmployeeID = 3  WHERE DeptID = 1;  
+-- Roz Murphy, Marketing
+UPDATE Department SET ManagerEmployeeID = 4  WHERE DeptID = 2;  
+-- Henry Doyle, Production
+UPDATE Department SET ManagerEmployeeID = 5  WHERE DeptID = 3;  
+-- Maria Costanza, Distribution
+UPDATE Department SET ManagerEmployeeID = 6  WHERE DeptID = 4;
+
+-- Inserting ONE days worth of hours worked, assuming Managers are Salary and not punching a clock.
+INSERT INTO Hours (EmployeeID, DateWorked, HoursWorked)
+VALUES
+    (7, '2025-11-01', 8.00),
+    (8, '2025-11-01', 7.25),
+    (9, '2025-11-01', 9.00),
+    (10, '2025-11-01', 8.50),
+    (11, '2025-11-01', 7.75),
+    (12, '2025-11-01', 8.25),
+    (13, '2025-11-01', 7.50),
+    (14, '2025-11-01', 8.00),
+    (15, '2025-11-01', 8.75),
+    (16, '2025-11-01', 7.25),
+    (17, '2025-11-01', 8.50),
+    (18, '2025-11-01', 9.00),
+    (19, '2025-11-01', 7.75),
+    (20, '2025-11-01', 8.25),
+    (21, '2025-11-01', 7.50),
+    (22, '2025-11-01', 8.00),
+    (23, '2025-11-01', 8.75),
+    (24, '2025-11-01', 7.25),
+    (25, '2025-11-01', 8.50),
+    (26, '2025-11-01', 9.00),
+    (27, '2025-11-01', 7.75),
+    (28, '2025-11-01', 8.25),
+    (29, '2025-11-01', 7.50),
+    (30, '2025-11-01', 8.00);
+
+INSERT INTO Wine (WineName, WineType, YearProduced)
+VALUES
+    ('Merlot', 'Red', 2023),
+    ('Cabernet', 'Red', 2023),
+    ('Chablis', 'White', 2023),
+    ('Chardonnay', 'White', 2023),
+    ('Merlot', 'Red', 2024),
+    ('Cabernet', 'Red', 2024),
+    ('Chablis', 'White', 2024),
+    ('Chardonnay', 'White', 2024),
+    ('Merlot', 'Red', 2025),
+    ('Cabernet', 'Red', 2025),
+    ('Chablis', 'White', 2025),
+    ('Chardonnay', 'White', 2025);
+
+-- Suppliers
+INSERT INTO Supplier (SupplierName, SupplierCategory)
+VALUES
+    ('Dionysus Bottlery', 'Bottles & Corks'),
+    ('Hermes Labels & Co', 'Labels & Boxes'),
+    ('Vulcan Vats & Tubing', 'Vats & Tubing');
+
+INSERT INTO SupplierDelivery (SupplierID, SupplyType, Quantity, ExpectedDelivery, ActualDelivery)
+VALUES
+    (1, 'Bottles', 500, '2025-10-01', '2025-10-01'),
+    (1, 'Corks', 500, '2025-10-01', '2025-10-02'),
+    (2, 'Labels', 1000, '2025-10-03', '2025-10-02'),
+    (2, 'Boxes', 1000, '2025-10-03', '2025-10-02'),
+    (3, 'Vats', 10, '2025-10-05', '2025-10-20'),
+    (3, 'Tubing', 50, '2025-10-05', '2025-10-25');
+
+-- Distributors
+INSERT INTO Distributor (DistName, DistPhone, DistAddress, DistEmail)
+VALUES
+    ('Olympus Spirits', '5551010101', '1 Mount Olympus Ave', 'contact@olympusspirits.com'),
+    ('Centaur Wines', '5552020202', '42 Labyrinth Lane', 'sales@centaurwines.com'),
+    ('Apollo Imports', '5553030303', '7 Sun Chariot Blvd', 'info@apolloimports.com'),
+    ('Poseidon Beverage Co', '5554040404', '12 Trident Way', 'orders@poseidonbev.com'),
+    ('Minerva Distributors', '5555050505', '88 Athena Court', 'support@minervadistributors.com'),
+    ('Vulcan Trade Ltd', '5556060606', '99 Forge Street', 'contact@vulcantrade.com');
+
+INSERT INTO ShipService (ShipperName, ShipperPhone, ShipperWeb)
+VALUES
+    ('Hermes Express', '5551111111', 'www.hermesexpress.com'),
+    ('Mercury Couriers', '5552222222', 'www.mercurycouriers.com'),
+    ('Pegasus Delivery', '5553333333', 'www.pegasusdelivery.com'), 
+    ('Argus Logistics', '5554444444', 'www.arguslogistics.com'),
+    ('Icarus Freight', '5555555555', 'www.icarusfreight.com'),
+    ('Apollo Air', '5556666666', 'www.apolloair.com');  
+
+INSERT INTO Shipment (ShipmentDate, TrackingNumber, ShippingService)
+VALUES
+    ('2025-11-08', 'TRACK-1001', 1),
+    ('2025-11-09', 'TRACK-1002', 2),
+    ('2025-11-10', 'TRACK-1003', 3),
+    ('2025-11-11', 'TRACK-1004', 4),
+    ('2025-11-12', 'TRACK-1005', 5),
+    ('2025-11-13', 'TRACK-1006', 6);
+
+INSERT INTO DistOrder (DistID, OrderDate)
+VALUES
+    (1, '2025-11-07'), -- Order 1, Shipment 4
+    (2, '2025-11-08'), -- Order 2, Shipment 2
+    (3, '2025-11-09'), -- Order 3, Shipment 5
+    (4, '2025-11-10'), -- Order 4, Shipment 10
+    (5, '2025-11-11'), -- Order 5, Shipment 6
+    (6, '2025-11-12'), -- Order 6, Shipment 1
+    (1, '2025-11-13'), -- Order 7, NOT SHIPPED
+    (2, '2025-11-14'), -- Order 8, Shipment 2 
+    (3, '2025-11-15'), -- Order 9, NOT SHIPPED
+    (4, '2025-11-16'), -- Order 10, Shipment 3
+    (5, '2025-11-17'), -- Order 11, NOT SHIPPED
+    (6, '2025-11-18'); -- Order 12, Shipment 1
+
+-- Add the Orders to the corresponding Shipments
+UPDATE DistOrder SET SHipmentID = 1 WHERE OrderID IN (6,12);
+UPDATE DistOrder SET SHipmentID = 2 WHERE OrderID IN (2,8);
+UPDATE DistOrder SET SHipmentID = 3 WHERE OrderID IN (4,10);
+UPDATE DistOrder SET SHipmentID = 4 WHERE OrderID = 1;
+UPDATE DistOrder SET SHipmentID = 5 WHERE OrderID = 3;
+UPDATE DistOrder SET SHipmentID = 6 WHERE OrderID = 5;
+
+INSERT INTO ItemOrderID (OrderID, WineID, Quantity)
+VALUES
+    -- Order 1 (Olympus Spirits)
+    (1, 1, 50), (1, 2, 50), (1, 3, 50), (1, 4, 50),
+    -- Order 2 (Centaur Wines)
+    (2, 2, 30), (2, 3, 30), (2, 4, 30),
+    -- Order 3 (Apollo Imports)
+    (3, 2, 40), (3, 4, 40), (3, 6, 40),
+    -- Order 4 (Poseidon Beverage Co)
+    (4, 1, 25), (4, 2, 25), (4, 5, 25),
+    -- Order 5 (Minerva Distributors)
+    (5, 1, 60), (5, 2, 60), (5, 3, 60), (5, 4, 60),
+    -- Order 6 (Vulcan Trade Ltd)
+    (6, 5, 45), (6, 6, 45), (6, 9, 45), (6, 10, 45);
+
+INSERT INTO WineToDist (WineID, DistID)
+VALUES
+    -- Distributor 1 (Olympus Spirits) carries all 2023–2025 wines
+    (1, 1), (2, 1), (3, 1), (4, 1),
+    (5, 1), (6, 1), (7, 1), (8, 1),
+    (9, 1), (10, 1), (11, 1), (12, 1),
+
+    -- Distributor 2 (Centaur Wines) dropped Chardonnay 2025, Doesn't carry Merlot
+    (2, 2), (3, 2), (4, 2),
+    (6, 2), (7, 2), (8, 2),
+    (10, 2), (11, 2),
+
+    -- Distributor 3 (Apollo Imports) added Merlot in 2025, doesn't carry Chablis
+    (2, 3), (4, 3),
+    (6, 3), (8, 3),
+    (9, 3), (11, 3), (12, 3),
+
+    -- Distributor 4 (Poseidon Beverage Co) added Chablis in 2025, doesn't carry Chardonnay
+    (1, 4), (2, 4),
+    (5, 4), (6, 4),
+    (9, 4), (10, 4), (11, 4),
+
+    -- Distributor 5 (Minerva Distributors) doesn't carry 2025 wines
+    (1, 5), (2, 5), (3, 5), (4, 5),
+    (5, 5), (6, 5), (7, 5), (8, 5),
+
+    -- Distributor 6 (Vulcan Trade Ltd) only carries 2024 and newer
+    (5, 6), (6, 6), (7, 6), (8, 6),
+    (9, 6), (10, 6), (11, 6), (12, 6);
