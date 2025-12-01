@@ -6,6 +6,12 @@ CREATE DATABASE DummyDB;
 USE DummyDB;
 
 
+-- Create a User for the Python Scripts and .env file.
+DROP USER IF EXISTS 'dionysus'@'localhost';
+CREATE USER 'dionysus'@'localhost' IDENTIFIED BY 'MountOlympus';
+GRANT ALL PRIVILEGES ON DummyDB.* TO 'dionysus'@'localhost';
+FLUSH PRIVILEGES;
+
 -- *** Create Tables
 
 -- ------------------
@@ -24,7 +30,7 @@ CREATE TABLE Employee (
     FirstName VARCHAR(50) NOT NULL,
     LastName VARCHAR(50) NOT NULL,
     Role VARCHAR(50),
-    DepartmentID INT,
+    DeptID INT,
     FOREIGN KEY (DeptID) REFERENCES Department(DeptID)
 );
 
