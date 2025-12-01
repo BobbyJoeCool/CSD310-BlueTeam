@@ -10,61 +10,71 @@ erDiagram
         string SupplierCategory
     }
 
-    SUPPLY_DELIVERY {
+    SUPPLIERDELIVERY {
         int InvoiceID PK
         int SupplierID FK
         string SupplyType
-        int QuantityDelivered
+        int Quantity
         date ExpectedDelivery
         date ActualDelivery
     }
 
-    SUPPLIER ||--o{ SUPPLY_DELIVERY : "Supplies"
+    SUPPLIER ||--o{ SUPPLIERDELIVERY : "Supplies"
 
 
     %% =======================
     %% DISTRIBUTORS
     %% =======================
 
-    DISTRIBUTOR {
-        int DistributorID PK
-        string DistributorName
-        string DistributorPhone
-        string DistributorAddress
-        string DistributorEmail
+    DIST {
+        int DistID PK
+        string DistName
+        string DistPhone
+        string DistAddress
+        string DistEmail
     }
 
-    DISTRIBUTOR_ORDER {
+    DISTORDER {
         int OrderID PK
-        int DistributorID FK
+        int DistID FK
         date OrderDate
     }
 
-    ORDER_ITEM {
+    ORDERITEM {
         int OrderItemID PK
         int OrderID FK
         int WineID FK
-        int QuantityOrdered
+        int Quantity
     }
+
+    SHIPPINGSERVICE {
+        int ShipperID
+        string ShipperName
+        string ShipperPhone
+        string ShipperWeb
+    }
+
 
     SHIPMENT {
         int ShipmentID PK
         int OrderID FK
         date ShipmentDate
         string TrackingNumber
+        int ShippingService FK
     }
 
-    WINE_DISTRIBUTOR {
+    WINETODIST {
         int WD_ID PK
         int WineID FK
         int DistributorID FK
     }
 
-    DISTRIBUTOR ||--o{ DISTRIBUTOR_ORDER : "Places"
-    DISTRIBUTOR_ORDER ||--o{ ORDER_ITEM : "Contains"
-    ORDER_ITEM ||--o{ SHIPMENT : "Ships"
-    WINE ||--o{ WINE_DISTRIBUTOR : "Linked"
-    DISTRIBUTOR ||--o{ WINE_DISTRIBUTOR : "Linked"
+    DIST ||--o{ DISTORDER : "Places"
+    DISTORDER ||--o{ ORDERITEM : "Contains"
+    ORDERITEM ||--o{ SHIPMENT : "Ships"
+    WINE ||--o{ WINETODIST : "Linked"
+    DIST ||--o{ WINETODIST : "Linked"
+    SHIPMENT ||--o{ SHIPPINGSERVICE : "Shipped By"
 
 
     %% =======================
@@ -80,13 +90,13 @@ erDiagram
     }
 
     DEPARTMENT {
-        int DepartmentID PK
-        string DepartmentName
+        int DeptID PK
+        string DeptName
         int ManagerEmployeeID FK
     }
 
     HOURS {
-        int HoursID PK
+        int PunchID PK
         int EmployeeID FK
         date DateWorked
         float HoursWorked

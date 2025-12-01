@@ -13,8 +13,8 @@ USE DummyDB;
 
 -- Departments Table
 CREATE TABLE Department (
-    DepartmentID INT PRIMARY KEY AUTO_INCREMENT,
-    DepartmentName VARCHAR(75) NOT NULL,
+    DeptID INT PRIMARY KEY AUTO_INCREMENT,
+    DeptName VARCHAR(75) NOT NULL,
     ManagerEmployeeID INT
 );
 
@@ -25,7 +25,7 @@ CREATE TABLE Employee (
     LastName VARCHAR(50) NOT NULL,
     Role VARCHAR(50),
     DepartmentID INT,
-    FOREIGN KEY (DepartmentID) REFERENCES Department(DepartmentID)
+    FOREIGN KEY (DeptID) REFERENCES Department(DeptID)
 );
 
 -- Time Punch Table
@@ -64,7 +64,7 @@ CREATE TABLE SupplierDelivery (
     InvoiceID INT PRIMARY KEY AUTO_INCREMENT,
     SupplierID INT NOT NULL,
     SupplyType VARCHAR(75),
-    QuantityDelivered INT NOT NULL,
+    Quantity INT NOT NULL,
     ExpectedDelivery DATE,
     ActualDelivery DATE
 );
