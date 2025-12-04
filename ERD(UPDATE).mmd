@@ -1,0 +1,114 @@
+    erDiagram
+    %% =======================
+    %% SUPPLIERS
+    %% =======================
+
+    SUPPLIER {
+        int SupplierID PK
+        string SupplierName
+        string SupplierCategory
+    }
+
+    SUPPLIERDELIVERY {
+        int InvoiceID PK
+        int SupplierID FK
+        string SupplyType
+        int Quantity
+        date ExpectedDelivery
+        date ActualDelivery
+    }
+
+    SUPPLIER ||--o{ SUPPLIERDELIVERY : "Supplies"
+
+
+    %% =======================
+    %% DISTRIBUTORS
+    %% =======================
+
+    DIST {
+        int DistID PK
+        string DistName
+        string DistPhone
+        string DistAddress
+        string DistEmail
+    }
+
+    DISTORDER {
+        int OrderID PK
+        int DistID FK
+        date OrderDate
+    }
+
+    ORDERITEM {
+        int OrderItemID PK
+        int OrderID FK
+        int WineID FK
+        int Quantity
+    }
+
+    SHIPPINGSERVICE {
+        int ShipperID PK
+        string ShipperName
+        string ShipperPhone
+        string ShipperWeb
+    }
+
+    SHIPMENT {
+        int ShipmentID PK
+        int OrderID FK
+        date ShipmentDate
+        string TrackingNumber
+        int ShippingService FK
+    }
+
+    WINETODIST {
+        int WD_ID PK
+        int WineID FK
+        int DistributorID FK
+    }
+
+    WINE {
+        int WineID PK
+        string WineName
+        string WineType
+        int YearProduced
+    }
+
+    DIST ||--o{ DISTORDER : "Places"
+    DISTORDER ||--o{ ORDERITEM : "Contains"
+    ORDERITEM }o--|| WINE : "For"
+
+    DISTORDER ||--o{ SHIPMENT : "Ships"
+    SHIPPINGSERVICE ||--o{ SHIPMENT : "Uses"
+
+    WINE ||--o{ WINETODIST : "Linked"
+    DIST ||--o{ WINETODIST : "Linked"
+
+
+    %% =======================
+    %% INTERNAL OPERATIONS
+    %% =======================
+
+    EMPLOYEE {
+        int EmployeeID PK
+        string FirstName
+        string LastName
+        string Role
+        int DepartmentID FK
+    }
+
+    DEPARTMENT {
+        int DeptID PK
+        string DeptName
+        int ManagerEmployeeID FK
+    }
+
+    HOURS {
+        int PunchID PK
+        int EmployeeID FK
+        date DateWorked
+        float HoursWorked
+    }
+
+    DEPARTMENT ||--o{ EMPLOYEE : "Employs"
+    EMPLOYEE ||--o{ HOURS : "Logs"
