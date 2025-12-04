@@ -14,6 +14,8 @@ config = {
     "raise_on_warnings": True #not in .env file
 }
 
+# Function to print data in aligned columns
+
 def printAlignedData(cursor, data):
     headers = [desc[0] for desc in cursor.description]
 
