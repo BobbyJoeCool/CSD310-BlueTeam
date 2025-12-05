@@ -1,6 +1,6 @@
 -- SQL script for creating the Bacchus Database
 
--- Delete a Dummy Database if it exists, then create a dummy database for testing the script.
+-- Delete a Database if it exists, then create a database for testing the script.
 DROP DATABASE IF EXISTS BacchusWineryDB;
 CREATE DATABASE BacchusWineryDB;
 USE BacchusWineryDB;
