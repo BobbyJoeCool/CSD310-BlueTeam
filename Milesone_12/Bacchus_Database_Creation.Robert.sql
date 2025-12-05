@@ -134,18 +134,3 @@ CREATE TABLE WineToDist (
     FOREIGN KEY (WineID) REFERENCES Wine (WineID),
     FOREIGN KEY (DistID) REFERENCES Distributor (DistID)
 );
-
--- ==================
--- Show Table Schemas
-SHOW Tables;
-DESC Department;
-DESC Employee;
-DESC Hours;
-DESC Wine;
-DESC Supplier;
-DESC SupplierDelivery;
-DESC Dist;
-DESC DistOrder;
-DESC ShipService;
-DESC Shipment;
-DESC ItemOrderID;
