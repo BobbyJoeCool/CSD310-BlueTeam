@@ -1,17 +1,17 @@
 erDiagram
     direction TB
 
+    %% Supplier Tables
+
     SUPPLIER {
         int SupplierID PK
         string SupplierName
         string SupplierCategory
     }
 
-    SUPPLIERDELIVERY {
+    SUPPLIER_DELIVERY {
         int InvoiceID PK
         int SupplierID FK
-        int SupplyItemID FK
-        int Quantity
         date ExpectedDelivery
         date ActualDelivery
     }
@@ -21,6 +21,22 @@ erDiagram
         string ItemName
         string ItemCategory
     }
+
+    SUPPLY_INVENTORY_TABLE {
+        int SupplyInventoryID PK
+        int SupplyItemID FK
+        int Quantity
+    }
+
+    SUPPLIER_ITEM_DELIVERY {
+        int OrderItemID PK
+        int InvoiceID FK
+        int SupplyItemID FK
+        int Quantity
+    }
+
+
+    %% WINE TABLES
 
     WINE_INVENTORY {
         int WineInventoryID PK
@@ -35,6 +51,9 @@ erDiagram
         int YearProduced
     }
 
+
+    %% DISTRIBUTOR TABLES
+
     DIST {
         int DistID PK
         string DistName
@@ -43,20 +62,20 @@ erDiagram
         string DistEmail
     }
 
-    DISTORDER {
+    DIST_ORDER {
         int OrderID PK
         int DistID FK
         date OrderDate
     }
 
-    ORDERITEM {
+    ORDER_ITEM {
         int OrderItemID PK
         int OrderID FK
         int WineID FK
         int Quantity
     }
 
-    SHIPPINGSERVICE {
+    SHIPPING_SERVICE {
         int ShipperID PK
         string ShipperName
         string ShipperPhone
@@ -71,24 +90,56 @@ erDiagram
         int ShippingService FK
     }
 
-    WINETODIST {
+    WINE_TO_DIST {
         int WD_ID PK
         int WineID FK
         int DistributorID FK
     }
 
+
+    %% Employee Tables
+
+    DEPARTMENT {
+        int DeptID PK
+        string DeptName
+        int ManagerEmployeeID FK
+    }
+
+    EMPLOYEE {
+        int EmployeeID PK
+        string FirstName
+        string LastName
+        string Role
+        int DeptID FK
+    }
+
+    TIME_PUNCH_TABLE {
+        int PunchID PK
+        int EmployeeID FK
+        date DateWorked
+        decimal HoursWorked
+    }
+
+
     %% RELATIONSHIPS
-    SUPPLIER ||--o{ SUPPLIERDELIVERY : supplies
-    SUPPLY_ITEM ||--o{ SUPPLIERDELIVERY : includes
+    
+    SUPPLIER ||--o{ SUPPLIER_DELIVERY : supplies
+    SUPPLIER_DELIVERY ||--o{ SUPPLIER_ITEM_DELIVERY : contains_items
+    SUPPLY_ITEM ||--o{ SUPPLIER_ITEM_DELIVERY : delivered
+    SUPPLY_ITEM ||--o{ SUPPLY_INVENTORY_TABLE : stocked_as
 
-    WINE ||--o{ WINE_INVENTORY : stored_in
-    WINE ||--o{ ORDERITEM : ordered_in
+    WINE ||--o{ WINE_INVENTORY : stocked_in
+    WINE ||--o{ ORDER_ITEM : included_in
 
-    DIST ||--o{ DISTORDER : places
-    DISTORDER ||--o{ ORDERITEM : contains
+    DEPARTMENT ||--o{ EMPLOYEE : includes
+    EMPLOYEE ||--o{ TIME_PUNCH_TABLE : logs
+    DEPARTMENT ||--|| EMPLOYEE : managed_by
 
-    SHIPPINGSERVICE ||--o{ SHIPMENT : ships
-    DISTORDER ||--o{ SHIPMENT : shipment_for
+    DIST ||--o{ DIST_ORDER : places
+    DIST_ORDER ||--o{ ORDER_ITEM : contains
 
-    WINE ||--o{ WINETODIST : distributed_by
-    DIST ||--o{ WINETODIST : distributes
+    DIST_ORDER ||--o{ SHIPMENT : shipped_as
+    SHIPPING_SERVICE ||--o{ SHIPMENT : ships
+
+    WINE ||--o{ WINE_TO_DIST : connects
+    DIST ||--o{ WINE_TO_DIST : connects

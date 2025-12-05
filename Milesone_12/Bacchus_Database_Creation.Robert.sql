@@ -39,7 +39,8 @@ CREATE TABLE Hours (
     PunchID INT PRIMARY KEY AUTO_INCREMENT,
     EmployeeID INT NOT NULL,
     DateWorked DATE NOT NULL,
-    HoursWorked DECIMAL(4, 2)
+    HoursWorked DECIMAL(4, 2),
+    FOREIGN KEY (EmployeeID) Employee (EmployeeID)
 );
 
 -- Wine Table
@@ -48,6 +49,14 @@ CREATE TABLE Wine (
     WineName VARCHAR(75) NOT NULL,
     WineType VARCHAR(75),
     YearProduced YEAR NOT NULL
+);
+
+-- Wine Inventory Table
+CREATE TABLE WineInventory (
+    WineInventoryID INT PRIMARY KEY AUTO_INCREMENT,
+    WineID INT,
+    Quantity INT,
+    FOREIGN KEY (WineID) REFERENCES Wine (WineID)
 );
 
 -- Adds the Foreign Key of the Manager ID to the Department Table
@@ -65,14 +74,38 @@ CREATE TABLE Supplier (
     SupplierCategory VARCHAR(100)
 );
 
+-- Supply Item Table
+CREATE TABLE SupplyItem (
+    SupplyItemID INT PRIMARY Key AUTO_INCREMENT,
+    ItemName VARCHAR(75),
+    SupplierID INT,
+    FOREIGN KEY (SupplierID) REFERENCES Supplier (SupplierID)
+);
+
+-- Supply Inventory Table
+CREATE TABLE SupplyInventory (
+    SupplyInventoryID INT PRIMARY KEY AUTO_INCREMENT,
+    SupplyItemID INT,
+    Quantity INT,
+    FOREIGN KEY (SupplyItemID) REFERENCES SupplyItem (SupplyItemID)
+);
+
 -- Supplier Delivery Table
 CREATE TABLE SupplierDelivery (
     InvoiceID INT PRIMARY KEY AUTO_INCREMENT,
     SupplierID INT NOT NULL,
-    SupplyType VARCHAR(75),
-    Quantity INT NOT NULL,
     ExpectedDelivery DATE,
     ActualDelivery DATE
+);
+
+-- Supplier Item Delivery Table
+CREATE TABLE SupplierItemDelivery (
+    OrderItemID INT PRIMARY KEY AUTO_INCREMENT,
+    InvoiceID INT NOT NULL,
+    SupplyItemID INT NOT NULL,
+    Quantity INT,
+    FOREIGN KEY (SupplyItemID) REFERENCES SupplyItem (SupplyItemID),
+    FOREIGN KEY (InvoiceID) REFERENCES SupplierDelivery (InvoiceID)
 );
 
 -- =====================
@@ -115,7 +148,7 @@ CREATE TABLE DistOrder (
 );
 
 -- Item Order ID Table
-CREATE TABLE ItemOrderID (
+CREATE TABLE DistItemOrderID (
     OrderItemID INT PRIMARY KEY AUTO_INCREMENT,
     OrderID INT NOT NULL,
     WineID INT NOT NULL,
