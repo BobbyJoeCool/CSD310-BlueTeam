@@ -1,7 +1,5 @@
-    erDiagram
-    %% =======================
-    %% SUPPLIERS
-    %% =======================
+erDiagram
+    direction TB
 
     SUPPLIER {
         int SupplierID PK
@@ -12,18 +10,30 @@
     SUPPLIERDELIVERY {
         int InvoiceID PK
         int SupplierID FK
-        string SupplyType
+        int SupplyItemID FK
         int Quantity
         date ExpectedDelivery
         date ActualDelivery
     }
 
-    SUPPLIER ||--o{ SUPPLIERDELIVERY : "Supplies"
+    SUPPLY_ITEM {
+        int SupplyItemID PK
+        string ItemName
+        string ItemCategory
+    }
 
+    WINE_INVENTORY {
+        int WineInventoryID PK
+        int WineID FK
+        int QuantityOnHand
+    }
 
-    %% =======================
-    %% DISTRIBUTORS
-    %% =======================
+    WINE {
+        int WineID PK
+        string WineName
+        string WineType
+        int YearProduced
+    }
 
     DIST {
         int DistID PK
@@ -67,48 +77,18 @@
         int DistributorID FK
     }
 
-    WINE {
-        int WineID PK
-        string WineName
-        string WineType
-        int YearProduced
-    }
+    %% RELATIONSHIPS
+    SUPPLIER ||--o{ SUPPLIERDELIVERY : supplies
+    SUPPLY_ITEM ||--o{ SUPPLIERDELIVERY : includes
 
-    DIST ||--o{ DISTORDER : "Places"
-    DISTORDER ||--o{ ORDERITEM : "Contains"
-    ORDERITEM }o--|| WINE : "For"
+    WINE ||--o{ WINE_INVENTORY : stored_in
+    WINE ||--o{ ORDERITEM : ordered_in
 
-    DISTORDER ||--o{ SHIPMENT : "Ships"
-    SHIPPINGSERVICE ||--o{ SHIPMENT : "Uses"
+    DIST ||--o{ DISTORDER : places
+    DISTORDER ||--o{ ORDERITEM : contains
 
-    WINE ||--o{ WINETODIST : "Linked"
-    DIST ||--o{ WINETODIST : "Linked"
+    SHIPPINGSERVICE ||--o{ SHIPMENT : ships
+    DISTORDER ||--o{ SHIPMENT : shipment_for
 
-
-    %% =======================
-    %% INTERNAL OPERATIONS
-    %% =======================
-
-    EMPLOYEE {
-        int EmployeeID PK
-        string FirstName
-        string LastName
-        string Role
-        int DepartmentID FK
-    }
-
-    DEPARTMENT {
-        int DeptID PK
-        string DeptName
-        int ManagerEmployeeID FK
-    }
-
-    HOURS {
-        int PunchID PK
-        int EmployeeID FK
-        date DateWorked
-        float HoursWorked
-    }
-
-    DEPARTMENT ||--o{ EMPLOYEE : "Employs"
-    EMPLOYEE ||--o{ HOURS : "Logs"
+    WINE ||--o{ WINETODIST : distributed_by
+    DIST ||--o{ WINETODIST : distributes
