@@ -1,3 +1,9 @@
+# Blue Group -  CSD-310
+# Carolina Rodriguez
+# Robert Breutzmann
+# Sara White
+
+
 import mysql.connector
 from mysql.connector import Error
 import dotenv

@@ -168,6 +168,18 @@ CREATE TABLE WineToDist (
     FOREIGN KEY (DistID) REFERENCES Distributor (DistID)
 );
 
+-- =================================
+-- ** Alter WinetoDist to add UNIQUE constraint to avoid duplicate entries
+ALTER TABLE WineToDist
+    ADD CONSTRAINT unique_wine_dist UNIQUE (WineID, DistID);
+
+-- ** Populate WinetoDist table
+INSERT INTO WineToDist (WineID, DistID)
+    SELECT DISTINCT
+     DistItemOrderID.WineID,
+     DistOrder.DistID
+    FROM DistItemOrderID
+
 
 -- =================================
 -- Adds data to the Bacchus Database
