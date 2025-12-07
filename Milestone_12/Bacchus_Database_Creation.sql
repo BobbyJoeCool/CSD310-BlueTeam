@@ -173,14 +173,6 @@ CREATE TABLE WineToDist (
 ALTER TABLE WineToDist
     ADD CONSTRAINT unique_wine_dist UNIQUE (WineID, DistID);
 
--- ** Populate WinetoDist table
-INSERT INTO WineToDist (WineID, DistID)
-    SELECT DISTINCT
-     DistItemOrderID.WineID,
-     DistOrder.DistID
-    FROM DistItemOrderID
-
-
 -- =================================
 -- Adds data to the Bacchus Database
 
