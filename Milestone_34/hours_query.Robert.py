@@ -6,6 +6,7 @@
 import mysql.connector
 from mysql.connector import Error
 from dotenv import dotenv_values
+from datetime import datetime, timedelta
 
 #using our .env file
 secrets = dotenv_values("setup.env")
@@ -18,21 +19,25 @@ config = {
     "raise_on_warnings": True #not in .env file
 }
 
-def fetchHoursWorked(conn):
+def fetchHoursWorked(conn, startDate, numWeeks):
+    if isinstance(startDate, str):
+        startDate = datetime.strptime(startDate, "%Y-%m-%d").date()
+    endDate = startDate + timedelta(weeks=numWeeks)
+
     cur = conn.cursor()
     cur.execute("""
                 SELECT 
                     e.EmployeeID,
                     e.FirstName,
                     e.LastName,
-                    SUM(h.HoursWorked) / 4.0 AS AvgHoursPerWeek
+                    SUM(h.HoursWorked) / %s AS AvgHoursPerWeek
                 FROM Employee e
                 LEFT JOIN Hours h
                     ON e.EmployeeID = h.EmployeeID
-                WHERE h.DateWorked BETWEEN '2025-11-03' AND '2025-11-28'
+                WHERE h.DateWorked BETWEEN %s AND %s
                 GROUP BY e.EmployeeID, e.FirstName, e.LastName
                 ORDER BY AvgHoursPerWeek DESC
-                """)
+                """, (numWeeks, startDate, endDate))
     byHour = cur.fetchall()
     
     cur.execute("""
@@ -40,14 +45,14 @@ def fetchHoursWorked(conn):
                     e.EmployeeID,
                     e.FirstName,
                     e.LastName,
-                    SUM(h.HoursWorked) / 4.0 AS AvgHoursPerWeek
+                    SUM(h.HoursWorked) / %s AS AvgHoursPerWeek
                 FROM Employee e
                 LEFT JOIN Hours h
                     ON e.EmployeeID = h.EmployeeID
-                WHERE h.DateWorked BETWEEN '2025-11-03' AND '2025-11-28'
+                WHERE h.DateWorked BETWEEN %s AND %s
                 GROUP BY e.EmployeeID, e.FirstName, e.LastName
                 ORDER BY e.LastName, e.FirstName
-                """)
+                """, (numWeeks, startDate, endDate))
     byName =cur.fetchall()
     cur.close()
     print(byHour) # for testing the output
@@ -95,7 +100,7 @@ def main():
             print("Could not connect to database.")
             return
 
-        byHour, byName = fetchHoursWorked(conn)
+        byHour, byName = fetchHoursWorked(conn, "2025-09-01", 13)
         byHour = formatData(byHour)
         byName = formatData(byName)
         print(f"\nEmployee's organized by Hours Worked")
