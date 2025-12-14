@@ -1,7 +1,7 @@
 # Sara White
 # CSD-310
 # Group Project - Bacchus Winery Report
-# Expected vs. Actual Deliveryf
+# Expected vs. Actual Delivery
 
 import mysql.connector
 from mysql.connector import Error
@@ -101,4 +101,5 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 
