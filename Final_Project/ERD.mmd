@@ -1,0 +1,145 @@
+erDiagram
+    direction TB
+
+    %% Supplier Tables
+
+    Supplier {
+        int SupplierID PK
+        string SupplierName
+        string SupplierCategory
+    }
+
+    SupplierDelivery {
+        int InvoiceID PK
+        int SupplierID FK
+        date ExpectedDelivery
+        date ActualDelivery
+    }
+
+    SupplyItem {
+        int SupplyItemID PK
+        string ItemName
+        string SupplierID
+    }
+
+    SupplyInventory {
+        int SupplyInventoryID PK
+        int SupplyItemID FK
+        int Quantity
+    }
+
+    SupplierItemDelivery {
+        int OrderItemID PK
+        int InvoiceID FK
+        int SupplyItemID FK
+        int Quantity
+    }
+
+
+    %% Wine TABLES
+
+    WineInventory {
+        int WineInventoryID PK
+        int WineID FK
+        int Quantity
+    }
+
+    Wine {
+        int WineID PK
+        string WineName
+        string WineType
+        int YearProduced
+    }
+
+
+    %% DISTRIBUTOR TABLES
+
+    Distributor {
+        int DistID PK
+        string DistName
+        string DistPhone
+        string DistAddress
+        string DistEmail
+    }
+
+    DistOrder {
+        int OrderID PK
+        int DistID FK
+        int ShipmentID
+        date OrderDate
+    }
+
+    DistItemOrderID {
+        int OrderItemID PK
+        int OrderID FK
+        int WineID FK
+        int Quantity
+    }
+
+    ShipService {
+        int ShipperID PK
+        string ShipperName
+        string ShipperPhone
+        string ShipperWeb
+    }
+
+    Shipment {
+        int ShipmentID PK
+        date ShipmentDate
+        string TrackingNumber
+        int ShippingID FK
+    }
+
+    WineToDist {
+        int WD_ID PK
+        int WineID FK
+        int DistID FK
+    }
+
+
+    %% Employee Tables
+
+    Department {
+        int DeptID PK
+        string DeptName
+        int ManagerEmployeeID FK
+    }
+
+    Employee {
+        int EmployeeID PK
+        string FirstName
+        string LastName
+        string Role
+        int DeptID FK
+    }
+
+    Hours {
+        int PunchID PK
+        int EmployeeID FK
+        date DateWorked
+        decimal HoursWorked
+    }
+
+
+    %% RELATIONSHIPS
+    
+    Supplier ||--o{ SupplierDelivery : supplies
+    SupplierDelivery ||--o{ SupplierItemDelivery : contains_items
+    SupplyItem ||--o{ SupplierItemDelivery : delivered
+    SupplyItem ||--o{ SupplyInventory : stocked_as
+
+    Wine ||--o{ WineInventory : stocked_in
+    Wine ||--o{ DistItemOrderID : included_in
+
+    Department ||--o{ Employee : includes
+    Employee ||--o{ Hours : logs
+    Department ||--|| Employee : managed_by
+
+    Distributor ||--o{ DistOrder : places
+    DistOrder ||--o{ DistItemOrderID : contains
+
+    DistOrder ||--o{ Shipment : shipped_as
+    ShipService ||--o{ Shipment : ships
+
+    Wine ||--o{ WineToDist : connects
+    Distributor ||--o{ WineToDist : connects
