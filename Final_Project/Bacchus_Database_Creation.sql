@@ -21,7 +21,6 @@ FLUSH PRIVILEGES;
 CREATE TABLE Department (
     DeptID INT PRIMARY KEY AUTO_INCREMENT,
     DeptName VARCHAR(75) NOT NULL,
-    ManagerEmployeeID INT
 );
 
 -- Employees Table
@@ -59,11 +58,6 @@ CREATE TABLE WineInventory (
     FOREIGN KEY (WineID) REFERENCES Wine (WineID)
 );
 
--- Adds the Foreign Key of the Manager ID to the Department Table
-ALTER TABLE Department
-ADD CONSTRAINT fk_manager
-    FOREIGN KEY (ManagerEmployeeID) REFERENCES Employee (EmployeeID);
-
 -- ==================
 -- ** Supplier Tables
 
@@ -96,6 +90,7 @@ CREATE TABLE SupplierDelivery (
     SupplierID INT NOT NULL,
     ExpectedDelivery DATE,
     ActualDelivery DATE
+    FOREIGN KEY (SupplierID) REFERENCES Supplier(SupplierID)
 );
 
 -- Supplier Item Delivery Table
@@ -217,16 +212,6 @@ VALUES
     ('Ariadne', 'Crete', 'Assistant Winemaker', 3),
     ('Meleager', 'Calydon', 'Vineyard Assistant', 3),
     ('Atalanta', 'Arcadia', 'Barrel Assistant', 3);
-
--- Update Departments with Managers
--- Janet Collins, Finance & Payroll
-UPDATE Department SET ManagerEmployeeID = 3  WHERE DeptID = 1;  
--- Roz Murphy, Marketing
-UPDATE Department SET ManagerEmployeeID = 4  WHERE DeptID = 2;  
--- Henry Doyle, Production
-UPDATE Department SET ManagerEmployeeID = 5  WHERE DeptID = 3;  
--- Maria Costanza, Distribution
-UPDATE Department SET ManagerEmployeeID = 6  WHERE DeptID = 4;
 
 -- The Inserting of the Hours into the database was removed because a Python Script was created to dynamically add random shifts over a period of time that can be set so that 4 months of data did not need to be uploaded.
 

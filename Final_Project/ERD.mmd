@@ -19,7 +19,7 @@ erDiagram
     SupplyItem {
         int SupplyItemID PK
         string ItemName
-        string SupplierID
+        string SupplierID FK
     }
 
     SupplyInventory {
@@ -48,7 +48,7 @@ erDiagram
         int WineID PK
         string WineName
         string WineType
-        int YearProduced
+        year YearProduced
     }
 
 
@@ -65,7 +65,7 @@ erDiagram
     DistOrder {
         int OrderID PK
         int DistID FK
-        int ShipmentID
+        int ShipmentID FK
         date OrderDate
     }
 
@@ -87,7 +87,7 @@ erDiagram
         int ShipmentID PK
         date ShipmentDate
         string TrackingNumber
-        int ShippingID FK
+        int ShipperID FK
     }
 
     WineToDist {
@@ -102,7 +102,6 @@ erDiagram
     Department {
         int DeptID PK
         string DeptName
-        int ManagerEmployeeID FK
     }
 
     Employee {
