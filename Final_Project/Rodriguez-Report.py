@@ -1,7 +1,5 @@
 # Blue Group -  CSD-310
 # Carolina Rodriguez
-# Robert Breutzmann
-# Sara White
 #Report for Wine Distribution and Sales
 
 import mysql.connector
@@ -81,13 +79,15 @@ def main():
             w.YearProduced,
             d.DistID,
             d.DistName
-        FROM winetodist wd
+        FROM distributor d
+        JOIN distorder o
+            ON d.DistID = o.DistID
+        JOIN distitemorderid doi
+            ON o.OrderID = doi.OrderID
         JOIN wine w 
-            ON wd.WineID = w.WineID
-        JOIN distributor d
-            ON wd.DistID = d.DistID
+            ON doi.WineID = w.WineID
         ORDER BY d.DistID, d.DistName
-        LIMIT 0, 1000;
+        LIMIT 0, 30;
         """
         #
         run_query(cursor, wineByDist, "Wine Distribution (by Distributor)")
@@ -102,7 +102,11 @@ def main():
         FROM Wine w
         JOIN DistItemOrderID dio 
             ON w.WineID = dio.WineID
-        GROUP BY w.WineID, w.WineName;
+        GROUP BY 
+            w.WineID, 
+            w.WineName, 
+            w.YearProduced
+        ORDER BY TotalSold DESC;
         """
         run_query(cursor, wineSold, "Total Sold per Wine")
 
@@ -112,13 +116,13 @@ def main():
             w.WineID,
             w.WineName,
             w.YearProduced,
-            COALESCE(SUM(dio.Quantity), 0) AS TotalSold
+            COALESCE(SUM(dio.Quantity), 0) AS NotSold
         FROM wine w
         LEFT JOIN distitemorderId dio
             ON w.WineID = dio.WineID
         GROUP BY w.WineID, w.WineName, w.YearProduced
-        HAVING TotalSold = 0
-        ORDER BY w.WineName;
+        HAVING NotSold = 0
+        ORDER BY w.WineID;
         """
         run_query(cursor, wineNOTsold, "Wines That Haven't Sold")
 
