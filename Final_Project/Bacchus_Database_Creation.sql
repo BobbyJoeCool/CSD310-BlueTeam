@@ -20,7 +20,7 @@ FLUSH PRIVILEGES;
 -- Departments Table
 CREATE TABLE Department (
     DeptID INT PRIMARY KEY AUTO_INCREMENT,
-    DeptName VARCHAR(75) NOT NULL,
+    DeptName VARCHAR(75) NOT NULL
 );
 
 -- Employees Table
@@ -90,7 +90,7 @@ CREATE TABLE SupplierDelivery (
     InvoiceID INT PRIMARY KEY AUTO_INCREMENT,
     SupplierID INT NOT NULL,
     ExpectedDelivery DATE,
-    ActualDelivery DATE
+    ActualDelivery DATE,
     FOREIGN KEY (SupplierID) REFERENCES Supplier(SupplierID)
 );
 
@@ -154,22 +154,6 @@ CREATE TABLE DistItemOrderID (
 );
 
 -- =========================================================================
--- ** Table for the Many to Many Relationship between Wines and Distributors
-
-CREATE TABLE WineToDist (
-    WD_ID INT PRIMARY KEY AUTO_INCREMENT,
-    WineID INT NOT NULL,
-    DistID INT NOT NULL,
-    FOREIGN KEY (WineID) REFERENCES Wine (WineID),
-    FOREIGN KEY (DistID) REFERENCES Distributor (DistID)
-);
-
--- =================================
--- ** Alter WinetoDist to add UNIQUE constraint to avoid duplicate entries
-ALTER TABLE WineToDist
-    ADD CONSTRAINT unique_wine_dist UNIQUE (WineID, DistID);
-
--- =================================
 -- Adds data to the Bacchus Database
 
 -- ===============
@@ -288,7 +272,7 @@ VALUES
     (2, '2025-11-05', '2025-11-03'), 
     (3, '2025-10-05', '2025-10-20'),
     (3, '2025-10-05', '2025-10-25'),
-    (3, '2025-11-08', '2025-11-15');
+    (3, '2025-11-08', '2025-11-15'),
 
     -- Q1 2025
     (1, '2025-01-15', '2025-01-16'),  -- 1 day late
@@ -382,33 +366,3 @@ VALUES
     (5, 1, 60), (5, 2, 60), (5, 3, 60), (5, 4, 60),
     -- Order 6 (Vulcan Trade Ltd)
     (6, 5, 45), (6, 6, 45), (6, 9, 45), (6, 10, 45);
-
-INSERT INTO WineToDist (WineID, DistID)
-VALUES
-    -- Distributor 1 (Olympus Spirits) carries all 2023–2025 wines
-    (1, 1), (2, 1), (3, 1), (4, 1),
-    (5, 1), (6, 1), (7, 1), (8, 1),
-    (9, 1), (10, 1), (11, 1), (12, 1),
-
-    -- Distributor 2 (Centaur Wines) dropped Chardonnay 2025, Doesn't carry Merlot
-    (2, 2), (3, 2), (4, 2),
-    (6, 2), (7, 2), (8, 2),
-    (10, 2), (11, 2),
-
-    -- Distributor 3 (Apollo Imports) added Merlot in 2025, doesn't carry Chablis
-    (2, 3), (4, 3),
-    (6, 3), (8, 3),
-    (9, 3), (11, 3), (12, 3),
-
-    -- Distributor 4 (Poseidon Beverage Co) added Chablis in 2025, doesn't carry Chardonnay
-    (1, 4), (2, 4),
-    (5, 4), (6, 4),
-    (9, 4), (10, 4), (11, 4),
-
-    -- Distributor 5 (Minerva Distributors) doesn't carry 2025 wines
-    (1, 5), (2, 5), (3, 5), (4, 5),
-    (5, 5), (6, 5), (7, 5), (8, 5),
-
-    -- Distributor 6 (Vulcan Trade Ltd) only carries 2024 and newer
-    (5, 6), (6, 6), (7, 6), (8, 6),
-    (9, 6), (10, 6), (11, 6), (12, 6);
