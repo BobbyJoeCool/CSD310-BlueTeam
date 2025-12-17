@@ -115,7 +115,8 @@ erDiagram
     Hours {
         int PunchID PK
         int EmployeeID FK
-        date DateWorked
+        datetime StartShift
+        datetime EndShift
         decimal HoursWorked
     }
 
@@ -132,7 +133,6 @@ erDiagram
 
     Department ||--o{ Employee : includes
     Employee ||--o{ Hours : logs
-    Department ||--|| Employee : managed_by
 
     Distributor ||--o{ DistOrder : places
     DistOrder ||--o{ DistItemOrderID : contains

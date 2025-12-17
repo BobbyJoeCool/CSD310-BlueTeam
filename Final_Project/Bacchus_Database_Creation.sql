@@ -37,7 +37,8 @@ CREATE TABLE Employee (
 CREATE TABLE Hours (
     PunchID INT PRIMARY KEY AUTO_INCREMENT,
     EmployeeID INT NOT NULL,
-    DateWorked DATE NOT NULL,
+    StartShift DATETIME NOT NULL,
+    EndShift DATETIME NOT NULL,
     HoursWorked DECIMAL(4, 2),
     FOREIGN KEY (EmployeeID) REFERENCES Employee (EmployeeID)
 );

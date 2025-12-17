@@ -30,19 +30,19 @@ def fetchHoursWorked(conn):
             e.LastName,
 
             ROUND(SUM(CASE
-                WHEN h.DateWorked BETWEEN '2024-12-01' AND '2025-02-28'
+                WHEN h.StartShift BETWEEN '2024-12-01' AND '2025-02-28'
                 THEN h.HoursWorked END) / 13, 2) AS Q1_Avg,
 
             ROUND(SUM(CASE
-                WHEN h.DateWorked BETWEEN '2025-03-01' AND '2025-05-31'
+                WHEN h.StartShift BETWEEN '2025-03-01' AND '2025-05-31'
                 THEN h.HoursWorked END) / 13, 2) AS Q2_Avg,
 
             ROUND(SUM(CASE
-                WHEN h.DateWorked BETWEEN '2025-06-01' AND '2025-08-31'
+                WHEN h.StartShift BETWEEN '2025-06-01' AND '2025-08-31'
                 THEN h.HoursWorked END) / 13, 2) AS Q3_Avg,
 
             ROUND(SUM(CASE
-                WHEN h.DateWorked BETWEEN '2025-09-01' AND '2025-11-30'
+                WHEN h.StartShift BETWEEN '2025-09-01' AND '2025-11-30'
                 THEN h.HoursWorked END) / 13, 2) AS Q4_Avg,
 
             ROUND(SUM(h.HoursWorked) / 52, 2) AS Yearly_Avg
