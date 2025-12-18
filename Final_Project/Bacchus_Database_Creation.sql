@@ -237,7 +237,7 @@ VALUES
     ('Hermes Labels & Co', 'Shipping Supplies'),
     ('Vulcan Vats & Tubing', 'Production Supplies');
 
-INSERT INTO SupplyItem (Name, SupplierID)
+INSERT INTO SupplyItem (ItemName, SupplierID)
 VALUES
     ("Bottles", 1),
     ("Corks", 1),

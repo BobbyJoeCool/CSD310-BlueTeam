@@ -25,7 +25,7 @@ def fetchHoursWorked(conn):
     query = """
         SELECT
             e.EmployeeID,
-            d.DeptName,
+            d.Name,
             e.FirstName,
             e.LastName,
 
@@ -53,7 +53,7 @@ def fetchHoursWorked(conn):
         INNER JOIN Department as d
             On e.DeptID = d.DeptID
         GROUP BY e.EmployeeID, e.FirstName, e.LastName
-        ORDER BY d.DeptName, e.LastName, e.FirstName;
+        ORDER BY d.Name, e.LastName, e.FirstName;
     """
 
     cur.execute(query)

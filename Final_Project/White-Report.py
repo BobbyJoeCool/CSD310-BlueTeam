@@ -68,7 +68,7 @@ def main():
         query = """
             SELECT 
                 sd.InvoiceID,
-                s.SupplierName,
+                s.Name,
                 sd.ExpectedDelivery,
                 sd.ActualDelivery,
                 DATEDIFF(sd.ActualDelivery, sd.ExpectedDelivery) AS DaysDifference,
@@ -81,7 +81,7 @@ def main():
             FROM SupplierDelivery AS sd
             INNER JOIN Supplier AS s
                 ON sd.SupplierID = s.SupplierID
-            ORDER BY sd.ExpectedDelivery, sd.InvoiceID;
+            ORDER BY s.Name, sd.ExpectedDelivery, sd.InvoiceID;
         """
 
         cursor.execute(query)

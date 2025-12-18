@@ -18,7 +18,7 @@ erDiagram
 
     SupplyItem {
         int SupplyItemID PK
-        string Name
+        string ItemName
         string SupplierID FK
     }
 
@@ -133,6 +133,3 @@ erDiagram
 
     DistOrder ||--o{ Shipment : shipped_as
     ShipService ||--o{ Shipment : ships
-
-    Wine ||--o{ WineToDist : connects
-    Distributor ||--o{ WineToDist : connects

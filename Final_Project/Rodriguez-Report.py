@@ -75,18 +75,18 @@ def main():
         wineByDist = """
         SELECT 
             w.WineID,
-            w.WineName,
+            w.Name,
             w.YearProduced,
             d.DistID,
-            d.DistName
+            d.Name
         FROM distributor d
         JOIN distorder o
             ON d.DistID = o.DistID
-        JOIN distitemorderid doi
+        JOIN distitemorder doi
             ON o.OrderID = doi.OrderID
         JOIN wine w 
             ON doi.WineID = w.WineID
-        ORDER BY d.DistID, d.DistName
+        ORDER BY d.DistID, d.Name
         LIMIT 0, 30;
         """
         #
@@ -96,15 +96,15 @@ def main():
         wineSold = """
         SELECT 
             w.WineID,
-            w.WineName,
+            w.Name,
             w.YearProduced,
             SUM(dio.Quantity) AS TotalSold
         FROM Wine w
-        JOIN DistItemOrderID dio 
+        JOIN DistItemOrder dio 
             ON w.WineID = dio.WineID
         GROUP BY 
             w.WineID, 
-            w.WineName, 
+            w.Name, 
             w.YearProduced
         ORDER BY TotalSold DESC;
         """
@@ -114,13 +114,13 @@ def main():
         wineNOTsold = """
         SELECT 
             w.WineID,
-            w.WineName,
+            w.Name,
             w.YearProduced,
             COALESCE(SUM(dio.Quantity), 0) AS NotSold
         FROM wine w
-        LEFT JOIN distitemorderId dio
+        LEFT JOIN distitemorder dio
             ON w.WineID = dio.WineID
-        GROUP BY w.WineID, w.WineName, w.YearProduced
+        GROUP BY w.WineID, w.Name, w.YearProduced
         HAVING NotSold = 0
         ORDER BY w.WineID;
         """
