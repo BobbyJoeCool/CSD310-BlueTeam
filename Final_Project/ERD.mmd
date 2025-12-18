@@ -5,8 +5,8 @@ erDiagram
 
     Supplier {
         int SupplierID PK
-        string SupplierName
-        string SupplierCategory
+        string Name
+        string Category
     }
 
     SupplierDelivery {
@@ -18,7 +18,7 @@ erDiagram
 
     SupplyItem {
         int SupplyItemID PK
-        string ItemName
+        string Name
         string SupplierID FK
     }
 
@@ -46,8 +46,8 @@ erDiagram
 
     Wine {
         int WineID PK
-        string WineName
-        string WineType
+        string Name
+        string Type
         year YearProduced
     }
 
@@ -56,10 +56,10 @@ erDiagram
 
     Distributor {
         int DistID PK
-        string DistName
-        string DistPhone
-        string DistAddress
-        string DistEmail
+        string Name
+        string Phone
+        string Address
+        string Email
     }
 
     DistOrder {
@@ -78,9 +78,9 @@ erDiagram
 
     ShipService {
         int ShipperID PK
-        string ShipperName
-        string ShipperPhone
-        string ShipperWeb
+        string Name
+        string Phone
+        string Web
     }
 
     Shipment {
@@ -90,18 +90,12 @@ erDiagram
         int ShipperID FK
     }
 
-    WineToDist {
-        int WD_ID PK
-        int WineID FK
-        int DistID FK
-    }
-
 
     %% Employee Tables
 
     Department {
         int DeptID PK
-        string DeptName
+        string Name
     }
 
     Employee {

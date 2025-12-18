@@ -20,7 +20,7 @@ FLUSH PRIVILEGES;
 -- Departments Table
 CREATE TABLE Department (
     DeptID INT PRIMARY KEY AUTO_INCREMENT,
-    DeptName VARCHAR(75) NOT NULL
+    Name VARCHAR(75) NOT NULL
 );
 
 -- Employees Table
@@ -46,8 +46,8 @@ CREATE TABLE Hours (
 -- Wine Table
 CREATE TABLE Wine (
     WineID INT PRIMARY KEY AUTO_INCREMENT,
-    WineName VARCHAR(75) NOT NULL,
-    WineType VARCHAR(75),
+    Name VARCHAR(75) NOT NULL,
+    Type VARCHAR(75),
     YearProduced YEAR NOT NULL
 );
 
@@ -65,8 +65,8 @@ CREATE TABLE WineInventory (
 -- Supplier Table
 CREATE TABLE Supplier (
     SupplierID INT PRIMARY KEY AUTO_INCREMENT,
-    SupplierName VARCHAR(75),
-    SupplierCategory VARCHAR(100)
+    Name VARCHAR(75),
+    Category VARCHAR(100)
 );
 
 -- Supply Item Table
@@ -110,18 +110,18 @@ CREATE TABLE SupplierItemDelivery (
 -- Distributor Table
 CREATE TABLE Distributor (
     DistID INT PRIMARY KEY AUTO_INCREMENT,
-    DistName VARCHAR(75) NOT NULL,
-    DistPhone VARCHAR(10),
-    DistAddress VARCHAR(75),
-    DistEmail VARCHAR(75) 
+    Name VARCHAR(75) NOT NULL,
+    Phone VARCHAR(10),
+    Address VARCHAR(75),
+    Email VARCHAR(75) 
 );
 
 -- ShippingService Table
 CREATE TABLE ShipService (
     ShipperID INT PRIMARY KEY AUTO_INCREMENT,
-    ShipperName VARCHAR(75) NOT NULL,
-    ShipperPhone VARCHAR(10),
-    ShipperWeb VARCHAR(100)
+    Name VARCHAR(75) NOT NULL,
+    Phone VARCHAR(10),
+    Web VARCHAR(100)
 );
 
 -- Shipment Table
@@ -144,7 +144,7 @@ CREATE TABLE DistOrder (
 );
 
 -- Item Order ID Table
-CREATE TABLE DistItemOrderID (
+CREATE TABLE DistItemOrder (
     OrderItemID INT PRIMARY KEY AUTO_INCREMENT,
     OrderID INT NOT NULL,
     WineID INT NOT NULL,
@@ -160,7 +160,7 @@ CREATE TABLE DistItemOrderID (
 -- Internal Tables
 
 -- Departments
-INSERT INTO Department (DeptName)
+INSERT INTO Department (Name)
 VALUES
     ('Finance & Payroll'),
     ('Marketing'),
@@ -200,7 +200,7 @@ VALUES
 
 -- The Inserting of the Hours into the database was removed because a Python Script was created to dynamically add random shifts over a period of time that can be set so that 4 months of data did not need to be uploaded.
 
-INSERT INTO Wine (WineName, WineType, YearProduced)
+INSERT INTO Wine (Name, Type, YearProduced)
 VALUES
     ('Merlot', 'Red', 2023),
     ('Cabernet', 'Red', 2023),
@@ -231,13 +231,13 @@ VALUES
     (12, 2985);
 
 -- Suppliers
-INSERT INTO Supplier (SupplierName, SupplierCategory)
+INSERT INTO Supplier (Name, Category)
 VALUES
     ('Dionysus Bottlery', 'Bottling Supplies'),
     ('Hermes Labels & Co', 'Shipping Supplies'),
     ('Vulcan Vats & Tubing', 'Production Supplies');
 
-INSERT INTO SupplyItem (ItemName, SupplierID)
+INSERT INTO SupplyItem (Name, SupplierID)
 VALUES
     ("Bottles", 1),
     ("Corks", 1),
@@ -302,7 +302,7 @@ VALUES
     (9, 5, 1), (9, 6, 1000); -- Order of 1 Vat and 1000 feet of tubing
 
 -- Distributors
-INSERT INTO Distributor (DistName, DistPhone, DistAddress, DistEmail)
+INSERT INTO Distributor (Name, Phone, Address, Email)
 VALUES
     ('Olympus Spirits', '5551010101', '1 Mount Olympus Ave', 'contact@olympusspirits.com'),
     ('Centaur Wines', '5552020202', '42 Labyrinth Lane', 'sales@centaurwines.com'),
@@ -311,7 +311,7 @@ VALUES
     ('Minerva Distributors', '5555050505', '88 Athena Court', 'support@minervadistributors.com'),
     ('Vulcan Trade Ltd', '5556060606', '99 Forge Street', 'contact@vulcantrade.com');
 
-INSERT INTO ShipService (ShipperName, ShipperPhone, ShipperWeb)
+INSERT INTO ShipService (Name, Phone, Web)
 VALUES
     ('Hermes Express', '5551111111', 'www.hermesexpress.com'),
     ('Mercury Couriers', '5552222222', 'www.mercurycouriers.com'),
@@ -352,7 +352,7 @@ UPDATE DistOrder SET SHipmentID = 4 WHERE OrderID = 1;
 UPDATE DistOrder SET SHipmentID = 5 WHERE OrderID = 3;
 UPDATE DistOrder SET SHipmentID = 6 WHERE OrderID = 5;
 
-INSERT INTO DistItemOrderID (OrderID, WineID, Quantity)
+INSERT INTO DistItemOrder (OrderID, WineID, Quantity)
 VALUES
     -- Order 1 (Olympus Spirits)
     (1, 1, 50), (1, 2, 50), (1, 3, 50), (1, 4, 50),
