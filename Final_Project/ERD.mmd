@@ -69,7 +69,7 @@ erDiagram
         date OrderDate
     }
 
-    DistItemOrderID {
+    DistItemOrder {
         int OrderItemID PK
         int OrderID FK
         int WineID FK
@@ -129,7 +129,7 @@ erDiagram
     Employee ||--o{ Hours : logs
 
     Distributor ||--o{ DistOrder : places
-    DistOrder ||--o{ DistItemOrderID : contains
+    DistOrder ||--o{ DistItemOrder : contains
 
-    DistOrder ||--o{ Shipment : shipped_as
+    Shipment ||--o{ DistOrder : shipped_as
     ShipService ||--o{ Shipment : ships
