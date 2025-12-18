@@ -123,7 +123,7 @@ erDiagram
     SupplyItem ||--o{ SupplyInventory : stocked_as
 
     Wine ||--o{ WineInventory : stocked_in
-    Wine ||--o{ DistItemOrderID : included_in
+    Wine ||--o{ DistItemOrder : included_in
 
     Department ||--o{ Employee : includes
     Employee ||--o{ Hours : logs
